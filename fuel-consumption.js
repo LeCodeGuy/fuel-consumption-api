@@ -71,7 +71,7 @@ export default function FuelConsumptionAPI(db) {
                 full_tank_refill
             ) values (
                 $1, $2, $3, $4, $5
-            ) returning id
+            ) returning id, distance
         `, [
             vehicleId,
             liters,
@@ -90,6 +90,19 @@ export default function FuelConsumptionAPI(db) {
             total_amount = $1, 
             total_liters = $2 where id = $3`,
             [results.total_amount, results.total_liters, vehicleId])
+
+        // Update cumulative distance
+        const cumulativeDistance = await db.oneOrNone(`
+                select coalesce(sum(distance), 0) as total_distance 
+                from fuel_entries 
+                where vehicle_id = $1`,
+                [vehicleId]);
+
+        await db.none(`
+            update vehicles set 
+            total_distance = $1 
+            where id = $2`,
+            [cumulativeDistance.total_distance, vehicleId]);
 
         // update fuel consumption
 
@@ -132,7 +145,7 @@ export default function FuelConsumptionAPI(db) {
     }
 
     async function refuelHistory(id){
-        return await db.any(`SELECT * FROM fuel_entries WHERE vehicle_id = $1`,id);
+        return await db.any(`SELECT * FROM fuel_entries WHERE vehicle_id = $1 ORDER BY created_at DESC`,id);
     }
 
     return {
