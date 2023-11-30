@@ -41,8 +41,19 @@ app.use(express.static('public'));
 const handlebarSetup = exphbs.engine({
     // Define custom helpers
     helpers: {
-        ne: function(v1, v2){
-            return v1 != v2
+        bool: function(v1){
+            let result = "Yes"
+
+            if(v1 === false){
+                result = 'No';
+            }
+
+            return result;
+        },
+        formatDate: function(v1){
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+            const formattedDate = new Date(v1).toLocaleDateString('en-GB', options);
+            return formattedDate.replace(',', ' ');
         },
         formatDecimal: function(v1) {
             let result
@@ -82,8 +93,10 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.get('/', routes.vehicles);
+app.post('/addVehicle',routes.addVehicle)
 app.post('/viewVehicle/:id', routes.viewVehicle);
 app.get('/vehicle/:id', routes.vehicle);
+app.post('/refuel/:id',routes.refuel);
 app.post('/return', routes.home);
 
 app.get('/api/vehicles', fuelConsumptionAPI.vehicles);

@@ -70,6 +70,49 @@ body{
     background-color: #f5f5f5;
 }
 
+.vehicleDetails{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed; /* Set table layout to fixed */
+}
+.vehicleDetails th, .vehicleDetails td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    width: 150px;
+}
+
+.vehicleDetails th {
+    background-color: #f2f2f2;
+}
+
+.vehicleDetails tr:hover {
+    background-color: #f5f5f5;
+}
+
+.refuelDetails{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed; /* Set table layout to fixed */
+}
+
+.refuelDetails th, .vehicleTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    width: 150px;
+}
+
+.refuelDetails th {
+    background-color: #f2f2f2;
+}
+
+.refuelDetails tr:hover {
+    background-color: #f5f5f5;
+}
+
 .btn {
   background-color: #CFD2CD;
   border: 0px solid #CFD2CD;
@@ -80,4 +123,27 @@ body{
   margin: 10px 5px;
   padding:5px;
   width:110px;
+}
+
+
+/* *Flash message styling */
+.msgError {
+    color:#cc0f35;
+    font-weight:bold;
+    border: solid 2px #fbcad3;
+    background: #fbcad3;
+    margin: 0 auto;
+    border-radius: 5px;
+    text-align: center;
+    width: 90%;
+}
+.msgSuccess {
+  color:#228b22;
+  font-weight:bold;
+  border: solid 2px #bce3bc;
+  background: #bce3bc;
+  margin: 0 auto;
+  border-radius: 5px;
+  text-align: center;
+  width: 90%;
 }

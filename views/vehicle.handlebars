@@ -11,20 +11,20 @@
                 <th>Total Distance</th>
                 <th>Fuel Consumption</th>
             </tr>
-            {{#each vehicle}}
+            {{#if vehicle}}
             <tr>
-                <td>{{this.description}}</td>
-                <td>{{this.reg_number}}</td>
-                <td>{{this.total_liters}}</td>
-                <td>R {{formatDecimal this.total_amount}}</td>
-                <td>{{this.total_distance}}</td>
-                <td>{{this.fuel_consumption}}</td>
+                <td>{{vehicle.description}}</td>
+                <td>{{vehicle.reg_number}}</td>
+                <td>{{vehicle.total_liters}}</td>
+                <td>R {{formatDecimal vehicle.total_amount}}</td>
+                <td>{{vehicle.total_distance}}</td>
+                <td>{{vehicle.fuel_consumption}}</td>
             </tr>
-            {{/each}}
+            {{/if}}
         </table>
-        <form action="/refuel" method="post">
-            <h3>Refuel details</h3>
-            <input type="text" name="odometer" id="txtOdometer" class="txtBox" placeholder="Odometer Reading e.g. 123456">
+        <form action="/refuel/{{vehicle.id}}" method="post">
+            <h3>Refuel form</h3>
+            <input type="text" name="odometer" id="txtOdometer" class="txtBox" placeholder="Km driven e.g. 500">
             <input type="number" name="liters" id="txtLiters" class="txtBox" placeholder="Liters of fuel e.g 10">
             <input type="number" name="amount" id="txtAmount" class="txtBox" placeholder="Cost of Fuel e.g 1000">
             <div class="fillUp">
@@ -37,28 +37,28 @@
             <input type="submit" value="Add" class="btn">
         </form>
     </div>
-    
-    <table>
+    <div class="formContainer" >
+        <h2>Refueling History</h2>
+        <table class="refuelDetails">
         <tr>
-            <th>Expense</th>
-            <th>Category</th>
-            <th>Totals</th>
-            <th></th>
+            <th>Date</th>
+            <th>Odometer reading</th>
+            <th>Liters</th>
+            <th>Paid</th>
+            <th>Filled Up</th>
         </tr>
-        
-        {{#each allExpensesData}}
+        {{#each refuelData}}
         <tr>
-            <td>{{this.expense}}</td>
-            <td>{{this.category_type}}</td>
-            <td>R {{formatDecimal this.total}}</td>
-            <td>
-                <form action="/remove/{{this.expense}}/{{this.category_type}}" method="post">
-                    <input type="submit" value="Delete" class="btn">
-                </form>
-            </td>
+            <td>{{formatDate this.created_at}}</td>
+            <td>{{this.distance}}</td>
+            <td>{{this.liters}}</td>
+            <td>{{this.amount_paid}}</td>
+            <td>{{bool this.full_tank_refill}}</td>
         </tr>
         {{/each}}
     </table>
+    </div>
+    
     <form action="/return" method="post">
         <input type="submit" value="Back to home" class="btn">
     </form>
