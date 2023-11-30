@@ -61,7 +61,7 @@ describe("The FuelConsumption API", function () {
         });
 
         assert.equal("error", result.status)
-        assert.equal("regNumber is invalid - should by CA, CY, CF, CAA followed by 3 numbers - 3 numbers", 
+        assert.equal("regNumber is invalid - should be CA, CY, CF, CAA followed by 3 numbers - 3 numbers", 
             result.message)
 
         vehicles = await fuelConsumption.vehicles();
