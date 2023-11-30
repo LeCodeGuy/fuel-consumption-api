@@ -1,0 +1,65 @@
+<div class="bodyContent">
+    <h1 class="mainHeading">{{pageTitle}}</h1>
+    <div class="formContainer" >
+        <h2>Vehicle Details</h2>
+        <table class="vehicleDetails">
+            <tr>
+                <th>Description</th>
+                <th>Registration Number</th>
+                <th>Total Liters</th>
+                <th>Total Amount</th>
+                <th>Total Distance</th>
+                <th>Fuel Consumption</th>
+            </tr>
+            {{#each vehicle}}
+            <tr>
+                <td>{{this.description}}</td>
+                <td>{{this.reg_number}}</td>
+                <td>{{this.total_liters}}</td>
+                <td>R {{formatDecimal this.total_amount}}</td>
+                <td>{{this.total_distance}}</td>
+                <td>{{this.fuel_consumption}}</td>
+            </tr>
+            {{/each}}
+        </table>
+        <form action="/refuel" method="post">
+            <h3>Refuel details</h3>
+            <input type="text" name="odometer" id="txtOdometer" class="txtBox" placeholder="Odometer Reading e.g. 123456">
+            <input type="number" name="liters" id="txtLiters" class="txtBox" placeholder="Liters of fuel e.g 10">
+            <input type="number" name="amount" id="txtAmount" class="txtBox" placeholder="Cost of Fuel e.g 1000">
+            <div class="fillUp">
+                <label for="filledUp">Did you fill up the vehicle?</label>
+                <select name="filledUp" id="fillUp">
+                    <option value='true'>Yes</option>
+                    <option value='false'>No</option>
+                </select>
+            </div>            
+            <input type="submit" value="Add" class="btn">
+        </form>
+    </div>
+    
+    <table>
+        <tr>
+            <th>Expense</th>
+            <th>Category</th>
+            <th>Totals</th>
+            <th></th>
+        </tr>
+        
+        {{#each allExpensesData}}
+        <tr>
+            <td>{{this.expense}}</td>
+            <td>{{this.category_type}}</td>
+            <td>R {{formatDecimal this.total}}</td>
+            <td>
+                <form action="/remove/{{this.expense}}/{{this.category_type}}" method="post">
+                    <input type="submit" value="Delete" class="btn">
+                </form>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+    <form action="/return" method="post">
+        <input type="submit" value="Back to home" class="btn">
+    </form>
+</div>

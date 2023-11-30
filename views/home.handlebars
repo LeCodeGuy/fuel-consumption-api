@@ -1,0 +1,45 @@
+<div class="bodyContent">
+    <h1 class="mainHeading">{{pageTitle}}</h1>
+    <form class="formContainer" action="/addVehicle" method="post">
+        <h2>Add a Vehicle</h2>
+        {{#if messages.error}}
+        <p class="message msgError">{{messages.error}}</p>
+        {{/if}}
+        <input type="text" name="description" id="txtDescription" class="txtBox" placeholder="Description e.g. Toyota Hilux">
+        <input type="number" name="regNumber" id="txtRegNumber" class="txtBox" placeholder="Registration Number e.g CF 123 456">
+        <input type="submit" value="Add vehicle" class="btn">
+        {{#if messages.success}}
+        <p class="message msgSuccess">{{messages.success}}</p>
+        {{/if}}
+    </form>
+    <div class="formContainer" >
+        <h2>All Vehicles</h2>
+        <table class="vehicleTable">
+            <tr>
+                <th>Description</th>
+                <th>Registration Number</th>
+                <th>Total Liters</th>
+                <th>Total Amount</th>
+                <th>Total Distance</th>
+                <th>Fuel Consumption</th>
+                <th></th>
+            </tr>
+            {{#each vehicles}}
+            <tr>
+                <td>{{this.description}}</td>
+                <td>{{this.reg_number}}</td>
+                <td>{{this.total_liters}}</td>
+                <td>R {{formatDecimal this.total_amount}}</td>
+                <td>{{this.total_distance}}</td>
+                <td>{{this.fuel_consumption}}</td>
+                <td>
+                    <form action="/viewVehicle/{{this.id}}" method="post">
+                        <input type="submit" value="View Vehicle" class="btn">
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+    
+</div>
